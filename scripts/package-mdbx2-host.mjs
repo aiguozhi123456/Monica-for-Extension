@@ -14,7 +14,7 @@ const executableName = "monica-mdbx2-host.exe";
 const executableBytes = new Uint8Array(await readFile(resolve(hostRoot, "target", "release", executableName)));
 const sourceCommit = git("rev-parse", "HEAD");
 const sourceTreeClean = git("status", "--porcelain", "--untracked-files=no") === "";
-if (!sourceTreeClean && !process.argv.includes("--allow-dirty")) throw new Error("Refusing to package MDBX2 Host from a dirty tracked worktree.");
+if (!sourceTreeClean && !process.argv.includes("--allow-dirty")) throw new Error("Refusing to package MDBX2 Host from a dirty tracked worktree.\nDEBUG dirty files:\n" + git("status", "--porcelain", "--untracked-files=no"));
 
 const fixedZipTime = new Date(1980, 0, 1, 0, 0, 0);
 const packageName = `monica-mdbx2-host-windows-x64-${cargo.version}.zip`;

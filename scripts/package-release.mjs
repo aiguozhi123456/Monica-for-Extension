@@ -25,7 +25,7 @@ const fixedTimestamp = "1980-01-01T00:00:00.000Z";
 const fixedZipTime = new Date(1980, 0, 1, 0, 0, 0);
 const sourceCommit = git("rev-parse", "HEAD");
 const sourceTreeClean = git("status", "--porcelain", "--untracked-files=no") === "";
-if (!sourceTreeClean && !process.argv.includes("--allow-dirty")) throw new Error("Refusing to create a trusted release from a dirty tracked worktree.");
+if (!sourceTreeClean && !process.argv.includes("--allow-dirty")) throw new Error("Refusing to create a trusted release from a dirty tracked worktree.\nDEBUG dirty files:\n" + git("status", "--porcelain", "--untracked-files=no"));
 
 const distEntries = await readDistEntries();
 for (const required of ["manifest.json", "background.js", "content.js", "main-world.js", "index.html", "popup.html", "passkey-verify.html", "mdbx-offscreen.html", "mdbx-browser/offscreen.js", "mdbx-browser/engine-worker.js", "mdbx-browser/engine.js", "mdbx-browser/monica_mdbx2_browser.wasm", "mdbx-browser/BROWSER-BUILD.json", "mdbx-browser/THIRD-PARTY-NOTICES.json"]) {
